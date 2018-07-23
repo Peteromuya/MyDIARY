@@ -90,106 +90,11 @@ class Diary(Resource):
             return make_response(jsonify(result), 200)
         return make_response(jsonify(result), 404)
 
-class EntryList(Resource):
-    """Contains GET and POST methods for manipulating entries"""
-
-
-    def __init__(self):
-        self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument(
-            'entry_option',
-            required=True,
-            type=inputs.regex(r"(.*\S.*)"),
-            help='kindly provide an entry option',
-            location=['form', 'json'])
-        self.reqparse.add_argument(
-            'entry_pass',
-            required=True,
-            type=int,
-            help='kindly provide a valid entry id',
-            location=['form', 'json'])
-        self.reqparse.add_argument(
-            'to-do',
-            required=True,
-            type=inputs.regex(r"(.*\S.*)"),
-            help='kindly provide a valid entry todo',
-            location=['form', 'json'])
-        super().__init__()
-
-    def post(self):
-        """Adds an entry option to the diary"""
-        args = self.reqparse.parse_args()
-        for entry_id in models.all_entries:
-            if models.all_entries.get(entry_id)["entry_option"] == args.get('entry_option'):
-                return jsonify({"message" : "entry option with that name already exists"})
-         
-        result = models.Entries.create_entry(entry_option=args['entry_option'], entry_pass=args['entry_pass'], todo=args['to-do'])
-        return make_response(jsonify(result), 201)
-
-
-    def get(self):
-        """Gets all entry options on entries"""
-        return make_response(jsonify(models.all_entries), 200)
-
-
-class Entries(Resource):
-    """Contains GET, PUT and DELETE methods for manipulating a single entry option"""
-
-
-    def __init__(self):
-        self.reqparse = reqparse.RequestParser()
-        self.reqparse.add_argument(
-            'entry_option',
-            required=True,
-            type=inputs.regex(r"(.*\S.*)"),
-            help='kindly provide an entry option',
-            location=['form', 'json'])
-        self.reqparse.add_argument(
-            'entry_pass',
-            required=True,
-            type=int,
-            help='kindly provide a valid entry id',
-            location=['form', 'json'])
-        self.reqparse.add_argument(
-            'to-do',
-            required=True,
-            type=inputs.regex(r"(.*\S.*)"),
-            help='kindly provide a valid entry to-do',
-            location=['form', 'json'])
-            
-
-        super().__init__()
-
-    def get(self, entry_id):
-        """Get a particular entry_option"""
-        try:
-            diary = models.all_entries[entry_id]
-            return make_response(jsonify(diary), 200)
-        except KeyError:
-            return make_response(jsonify({"message" : "entry option does not exist"}), 404)
-
-    def put(self, entry_id):
-        """Update a particular entry option"""
-        kwargs = self.reqparse.parse_args()
-        result = models.Entries.update_entries(entry_id, **kwargs)
-        if result != {"message" : "entry option does not exist"}:
-            return make_response(jsonify(result), 200)
-        return make_response(jsonify(result), 404)
-
-    def delete(self, entry_id):
-        """Delete a particular entry option"""
-        result = models.Entries.delete_entry(entry_id)
-        if result != {"message" : "entry option does not exist"}:
-            return make_response(jsonify(result), 200)
-        return make_response(jsonify(result), 404)
-
-
 
 diaries_api = Blueprint('resources.diaries', __name__)
 api = Api(diaries_api) # create the API
 api.add_resource(DiaryList, '/diaries', endpoint='diaries')
 api.add_resource(Diary, '/diaries/<int:diary_id>', endpoint='diary')
 
-api.add_resource(EntryList, '/entries', endpoint='entries')
-api.add_resource(Entries, '/entries/<int:entry_id>', endpoint='entry')
+
 

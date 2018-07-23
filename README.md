@@ -63,10 +63,7 @@ GET   /api/v1/diaries/id | Get a single diary
 PUT   /api/v1/diaries/id | Update a single diary
 DELETE   /api/v1/diaries/id | Delete a single diary
 POST   /api/v1/entries | Create new entry 
-GET   /api/v1/entries | Get all entries
-GET   /api/v1/entries/id | Get a single entry
-PUT   /api/v1/entries/id | Update a single entry
-DELETE   /api/v1/entries/id | Delete a single entry
+
 
 ## Running the tests
 
