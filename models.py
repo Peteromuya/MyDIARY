@@ -4,8 +4,8 @@
 all_users = {}
 user_count = 1
 
-all_diaries = {}
-diary_count = 1
+all_entries = {}
+entry_count = 1
 
 
 class User(object):
@@ -42,36 +42,36 @@ class User(object):
             return {"message" : "user does not exist"}
 
 
-class Diary(object):
-    """Contains methods to add, update and delete a diary"""
+class Entry(object):
+    """Contains methods to add, update and delete an entry"""
 
 
     @staticmethod
-    def create_diary(diary_no, todo):
-        """Creates a new diary_no and appends this information to the all_diaries dictionary"""
-        global all_diaries
-        global diary_count
-        all_diaries[diary_count] = {"id": diary_count, "diary_no" : diary_no, "to-do": todo}
-        new_diary = all_diaries[diary_count]
-        diary_count += 1
-        return new_diary
+    def create_entry(user_id, todo):
+        """Creates a new date and appends this information to the all_entries dictionary"""
+        global all_entries
+        global entry_count
+        all_entries[entry_count] = {"id": entry_count, "to-do": todo}
+        new_entry = all_entries[entry_count]
+        entry_count += 1
+        return new_entry
 
     @staticmethod
-    def update_diary(diary_id, diary_no, todo, **kwargs):
-        """Updates diary no's information"""
-        if diary_id in all_diaries.keys():
-            all_diaries[diary_id] = {"id": diary_id, "diary_no" : diary_no, "to-do" : todo}
-            return all_diaries[diary_id]
-        return {"message" : "diary_no does not exist"}
+    def update_entry(email, date, todo, **kwargs):
+        """Updates entries' dates information"""
+        if email in all_entries.keys():
+            all_entries[email] = {"user_idl": user_id, "date" : date, "to-do" : todo}
+            return all_entries[user_id]
+        return {"message" : "id with that entry does not exist"}
 
     @staticmethod
-    def delete_diary(diary_id):
-        """Deletes a diary"""
+    def delete_entry(user_id):
+        """Deletes an entry"""
         try:
-            del all_diaries[diary_id]
-            return {"message" : "diary number successfully deleted"}
+            del all_entries[user_id]
+            return {"message" : "entry with that id is successfully deleted"}
         except KeyError:
-            return {"message" : "diary number does not exist"}
+            return {"message" : "entry with that id does not exist"}
 
 
 
