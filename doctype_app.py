@@ -129,12 +129,12 @@ def delete_user():
 
 
 # Diaries
-@app.route('/api/v1/diaries', methods=["POST"])
-def create_diary():
-    """ endpoint for creating a diary.
+@app.route('/api/v1/entries', methods=["POST"])
+def create_entry():
+    """ endpoint for creating an entry.
     ---
     parameters:
-      - name: diary_no
+      - name: user_id
         required: true
         in: formData
         type: integer
@@ -144,29 +144,29 @@ def create_diary():
         required: true
     """
 
-@app.route("/api/v1/diaries", methods=["GET"])
-def get_all_diaries():
-    """endpoint for getting all diaries.
+@app.route("/api/v1/entries", methods=["GET"])
+def get_all_entries():
+    """endpoint for getting all entries.
     No parameters required
     """
 
-@app.route("/api/v1/diaries/<int:diary_id>", methods=["GET"])
-def get_one_diary():
-    """endpoint for  getting a particular diary.
+@app.route("/api/v1/entries/<int:user_id>", methods=["GET"])
+def get_one_entry():
+    """endpoint for  getting a particular entry.
     ---
     parameters:
-      - name: diary_id
+      - name: user_id
         in: path
         type: integer
         required: true
     """
 
-@app.route('/api/v1/diaries/<int:diary_id>', methods=["PUT"])
-def modify_diary():
-    """ endpoint for modifying an existing diary.
+@app.route('/api/v1/entries/<int:user_id>', methods=["PUT"])
+def modify_entry():
+    """ endpoint for modifying an existing entry.
     ---
     parameters:
-      - name: diary_no
+      - name: user_id
         required: true
         in: formData
         type: integer
@@ -174,18 +174,18 @@ def modify_diary():
         in: formData
         type: string
         required: true
-      - name: diary_id
+      - name: user_id
         in: path
         type: integer
         required: true
     """
 
-@app.route('/api/v1/diaries/<int:diary_id>', methods=["DELETE"])
-def delete_diary():
+@app.route('/api/v1/entries/<int:entry_id>', methods=["DELETE"])
+def delete_entry():
     """ endpoint for deleting an existing diary.
     ---
     parameters:
-      - name: diary_id
+      - name: user_id
         in: path
         type: integer
         required: true

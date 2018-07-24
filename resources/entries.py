@@ -12,17 +12,17 @@ import config
 import models 
 from .auth import admin_required
 
-class DiaryList(Resource):
+class EntryList(Resource):
     """Contains GET and POST methods"""
 
 
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument(
-            'diary_no',
+            'user_id',
             required=True,
             type=int,
-            help='kindly provide a diary number',
+            help='kindly provide a valid id',
             location=['form', 'json'])
         self.reqparse.add_argument(
             'to-do',
@@ -33,31 +33,33 @@ class DiaryList(Resource):
         super().__init__()
 
     def post(self):
-        """Adds a new diary"""
+        """Adds a new entry"""
         args = self.reqparse.parse_args()
-        for diary_id in models.all_diaries:
-            if models.all_diaries.get(diary_id)["diary_no"] == args.get('diary_no'):
-                return jsonify({"message" : "diary with that number already exists"})
+        for email in models.all_entries:
+            if models.all_entries.get(email)["to-do"] == args.get('to-do'):
+                return jsonify({"message" : "entry with that id already exists"})
         
-        result = models.Diary.create_diary(diary_no=args['diary_no'], todo=args['to-do'])
+        result = models.Entry.create_entry(user_id=args['user_id'], todo=args['to-do'])
         return make_response(jsonify(result), 201)
 
-    def get(self):
-        """Gets all diary nos."""
-        return make_response(jsonify(models.all_diaries), 200)
+    def get(self): 
+        """Gets all entries."""
+        return make_response(jsonify(models.all_entries), 200)
 
 
-class Diary(Resource):
-    """Contains GET, PUT and DELETE methods for manipulating a single diary"""
+
+class Entries(Resource):
+    """Contains GET, PUT and DELETE methods for manipulating a single entry option"""
 
 
+   
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument(
-            'diary_no',
+            'user_id',
             required=True,
             type=int,
-            help='kindly provide a diary no.',
+            help='kindly provide a valid id',
             location=['form', 'json'])
         self.reqparse.add_argument(
             'to-do',
@@ -67,34 +69,34 @@ class Diary(Resource):
             location=['form', 'json'])
         super().__init__()
 
-    def get(self, diary_id):
-        """Get a particular diary"""
+    def get(self, entry_id):
+        """Get a particular entry_option"""
         try:
-            diary = models.all_diaries[diary_id]
+            diary = models.all_entries[entry_id]
             return make_response(jsonify(diary), 200)
         except KeyError:
-            return make_response(jsonify({"message" : "diary no. does not exist"}), 404)
+            return make_response(jsonify({"message" : "entry option does not exist"}), 404)
 
-    def put(self, diary_id):
-        """Update a particular diary"""
+    def put(self, user_id):
+        """Update a particular entry"""
         kwargs = self.reqparse.parse_args()
-        result = models.Diary.update_diary(diary_id, **kwargs)
-        if result != {"message" : "diary no. does not exist"}:
+        result = models.Entry.update_entries(user_id, **kwargs)
+        if result != {"message" : "entry does not exist"}:
             return make_response(jsonify(result), 200)
         return make_response(jsonify(result), 404)
 
-    def delete(self, diary_id):
-        """Delete a particular diary"""
-        result = models.Diary.delete_diary(diary_id)
-        if result != {"message" : "diary no. does not exist"}:
+    def delete(self, entry_id):
+        """Delete a particular entry option"""
+        result = models.Entry.delete_entry(entry_id)
+        if result != {"message" : "entry option does not exist"}:
             return make_response(jsonify(result), 200)
         return make_response(jsonify(result), 404)
 
 
-diaries_api = Blueprint('resources.diaries', __name__)
-api = Api(diaries_api) # create the API
-api.add_resource(DiaryList, '/diaries', endpoint='diaries')
-api.add_resource(Diary, '/diaries/<int:diary_id>', endpoint='diary')
+entries_api = Blueprint('resources.entries', __name__)
+api = Api(entries_api) # create the API
+api.add_resource(EntryList, '/entries', endpoint='entries')
+api.add_resource(Entries, '/entries/<int:entry_id>', endpoint='entry')
 
 
 
