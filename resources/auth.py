@@ -10,7 +10,6 @@ import config
 
 
 def user_required(f):
-    """Checks for authenticated users with valid token in the header"""
 
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -32,7 +31,7 @@ def user_required(f):
 
 
 def admin_required(f):
-    """Checks for authenticated admins with valid token in the header"""
+
 
     @wraps(f)
     def decorated(*args, **kwargs):

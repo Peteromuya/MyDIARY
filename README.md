@@ -17,8 +17,8 @@ These instructions will get you a copy of the project up and running on your loc
 1. Clone the repository
 
 ```
-$ git clone https://github.com/Peteromuya/My_Diary
-$ cd into the created folder
+$ git clone https://github.com/Peteromuya/MyDIARY/tree/API-V1
+$ cd into MyDiary-Final
 ```
   
 2. Initialize and activate a virtualenv

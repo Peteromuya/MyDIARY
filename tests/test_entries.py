@@ -19,21 +19,16 @@ class EntryTests(unittest.TestCase):
 
 
     def setUp(self):
-        """Initialize important variables and makes them easily availabe through the self keyword"""
         self.app = app.test_client()
         self.entry = json.dumps({"user_id" : "007"})
         self.todo = json.dumps({"to-do" : "Going to cinema with my friends"})
         self.existing_diary = self.app.post('/api/v1/entries', data=self.entry, content_type='application/json')
         
-        
-    # Entry tests
     def test_get_all_entries(self):
-        """Tests successfully getting all entries through the entry endpoint"""
         response = self.app.get('/api/v1/entries')
         self.assertEqual(response.status_code, 200)
 
     def test_successful_entries_creation(self):
-        """Tests successfully creating a new entry through the entries endpoint"""
         data = json.dumps({"user_id" : "010", "to-do" : "swimming"})
         response = self.app.post('/api/v1/entries', data=data, content_type='application/json')
         result = json.loads(response.data)
@@ -42,7 +37,6 @@ class EntryTests(unittest.TestCase):
         self.assertEqual(response.status_code, 201)
 
     def test_entry_creation_existing_number(self):
-        """Tests unsuccessfully creating an entry because of existing user id"""
         data = json.dumps({"user_id" :"020", "to-do": "to watch a game"})
         response = self.app.post('/api/v1/entries', data=data, content_type='application/json') # pylint: disable=W0612
         response2 = self.app.post('/api/v1/entries', data=data, content_type='application/json')
@@ -50,7 +44,6 @@ class EntryTests(unittest.TestCase):
         self.assertEqual(result.get("message"), 'entry with that id already exists')
 
     def test_create_empty_entry(self):
-        """Tests unsuccessfully creating a new entry because of empty user_id"""
         data = json.dumps({ "entry" : "........."})
         response = self.app.post('/api/v1/entries', data=data, content_type='application/json')
         result = json.loads(response.data)
@@ -58,36 +51,30 @@ class EntryTests(unittest.TestCase):
 
 
     def test_create_menu_invalid_entry(self):
-        """Tests unsuccessfully creating a new entry"""
         data = json.dumps({"d": "one hundred"})
         response = self.app.post('/api/v1/entries', data=data, content_type='application/json')
         result = json.loads(response.data)
         self.assertEqual(result.get("message"), {'user_id': 'kindly provide a valid id'})
 
     def test_get_one_entry(self):
-        """Tests successfully getting an entry through the entries endpoint"""
         response = self.app.get('/api/v1/entries/1')
         self.assertEqual(response.status_code, 200)
 
     def test_getting_non_existing_entry(self):
-        """Test getting an entry option while providing non-existing id"""
         response = self.app.get('/api/v1/entries/57')
         self.assertEqual(response.status_code, 404)
 
-    # def test_successful_update(self):
-    #     """Test a successful entry option update"""
-    #     data = json.dumps({"user_id" : "1", "to-do" : "swimming"})
-    #     response = self.app.put('/api/v1/entries/1', data=data, content_type='application/json')
-    #     self.assertEqual(response.status_code, 200)
+    def test_successful_update(self):
+        data = json.dumps({"user_id" : "1", "to-do" : "swimming"})
+        response = self.app.put('/api/v1/entries/1', data=data, content_type='application/json')
+        self.assertEqual(response.status_code, 200)
 
     def test_updating_non_existing_entry(self):
-        """Test getting an entry option while providing non-existing id"""
         response = self.app.put('/api/v1/entry/57')
         self.assertEqual(response.status_code, 404)
 
 
     def test_good_deletion(self):
-        """Test a successful entry deletion"""
         response = self.app.delete('/api/v1/entries/1')
         self.assertEqual(response.status_code, 200)
         
