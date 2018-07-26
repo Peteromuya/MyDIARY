@@ -1,14 +1,16 @@
 """Leads to the endpoints derived from manipulation of user information"""
-import os
+import datetime
+
+import psycopg2
 from flask import Blueprint, jsonify, make_response
 from flask_restful import Resource, Api, reqparse, inputs, marshal
 
 from werkzeug.security import check_password_hash
 import jwt
-import datetime
 
 import config
 import models
+from models import db
 from .auth import admin_required
 
 
