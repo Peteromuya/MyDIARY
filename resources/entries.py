@@ -34,14 +34,16 @@ class EntryList(Resource):
 
     def post(self):
         """Adds a new entry"""
-        args = self.reqparse.parse_args()
-        for email in models.all_entries:
-            if models.all_entries.get(email)["to-do"] == args.get('to-do'):
-                return jsonify({"message" : "entry with that id already exists"})
-        
-        result = models.Entry.create_entry(user_id=args['user_id'], todo=args['to-do'])
-        return make_response(jsonify(result), 201)
+        kwargs = self.reqparse.parse_args()
 
+        token = request.headers['x-access-token']
+        data = jwt.decode(token, config.Config.SECRET_KEY)
+        user_id = data['id']
+
+        result = models.Entry.create_entry(user_id=user_id, **kwargs)
+        return result
+
+   
     def get(self): 
         """Gets all entries."""
         return make_response(jsonify(models.all_entries), 200)
@@ -79,7 +81,16 @@ class Entries(Resource):
 
     def put(self, user_id):
         """Update a particular entry"""
+
+        token = request.headers['x-access-token']
+        data = jwt.decode(token, config.Config.SECRET_KEY)
+        driver_id = data['id']
+
         kwargs = self.reqparse.parse_args()
+        token = request.headers['x-access-token']
+        data = jwt.decode(token, config.Config.SECRET_KEY)
+        entry_id = data['id']
+        
         result = models.Entry.update_entries(user_id, **kwargs)
         if result != {"message" : "entry does not exist"}:
             return make_response(jsonify(result), 200)
@@ -87,11 +98,15 @@ class Entries(Resource):
 
     def delete(self, entry_id):
         """Delete a particular entry option"""
+
+        token = request.headers['x-access-token']
+        data = jwt.decode(token, config.Config.SECRET_KEY)
+        user_id = data['id']
+
         result = models.Entry.delete_entry(entry_id)
         if result != {"message" : "entry option does not exist"}:
             return make_response(jsonify(result), 200)
         return make_response(jsonify(result), 404)
-
 
 entries_api = Blueprint('resources.entries', __name__)
 api = Api(entries_api) # create the API
