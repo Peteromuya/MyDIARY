@@ -29,7 +29,7 @@ def update(item, quantity, price):
 
 
 create_table()
-insert("Bananas",10,15)
+insert("Orange",10,15)
 # delete("wine glass"))
 # print(view())
 # insert("coffee cup",10,5)

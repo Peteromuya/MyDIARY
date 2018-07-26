@@ -3,7 +3,7 @@
 import datetime
 from flask import jsonify, Blueprint, make_response
 from flask_restful import Resource, Api, reqparse, inputs
-import psycopg2
+import os
 
 from werkzeug.security import check_password_hash
 import jwt
@@ -11,7 +11,6 @@ import jwt
 import config
 import models 
 from .auth import admin_required
-from models import db
 
 class EntryList(Resource):
     """Contains GET and POST methods"""

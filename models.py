@@ -206,7 +206,7 @@ def tables_creation():
                                                     date VARCHAR(100) NOT NULL)"""
             
 
-    conn = psycopg2.connect(db)
+    conn = psycopg2.connect("dbname='MODELS'")
     cur = conn.cursor()
     for table in tables:
         cur.execute(table)
