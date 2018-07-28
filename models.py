@@ -1,20 +1,14 @@
-"""Handles data storage for Users, Diaries and Entries
+"""Handles data storage for Users and Diaries
 """
 
 all_users = {}
 user_count = 1
 
-all_diaries = {}
-diary_count = 1
-
 all_entries = {}
 entry_count = 1
 
 
-
-
 class User(object):
-    """Contains methods to add, update and delete a user"""
 
 
     @staticmethod
@@ -47,67 +41,37 @@ class User(object):
             return {"message" : "user does not exist"}
 
 
-class Diary(object):
-    """Contains methods to add, update and delete a diary"""
+class Entry(object):
 
 
     @staticmethod
-    def create_diary(diary_no, todo):
-        """Creates a new diary_no and appends this information to the all_diaries dictionary"""
-        global all_diaries
-        global diary_count
-        all_diaries[diary_count] = {"id": diary_count, "diary_no" : diary_no, "to-do": todo}
-        new_diary = all_diaries[diary_count]
-        diary_count += 1
-        return new_diary
-
-    @staticmethod
-    def update_diary(diary_id, diary_no, todo, **kwargs):
-        """Updates diary no's information"""
-        if diary_id in all_diaries.keys():
-            all_diaries[diary_id] = {"id": diary_id, "diary_no" : diary_no, "to-do" : todo}
-            return all_diaries[diary_id]
-        return {"message" : "diary_no does not exist"}
-
-    @staticmethod
-    def delete_diary(diary_id):
-        """Deletes a diary"""
-        try:
-            del all_diaries[diary_id]
-            return {"message" : "diary number successfully deleted"}
-        except KeyError:
-            return {"message" : "diary number does not exist"}
-
-
-class Entries(object):
-    """Contains methods to add, update and delete a entry options"""
-
-
-    @staticmethod
-    def create_entry(entry_option, todo, **kwargs):
-        """Creates a new entry option and appends this information to the all_entries dictionary"""
+    def create_entry(user_id, todo):
+        """Creates a new date and appends this information to the all_entries dictionary"""
         global all_entries
         global entry_count
-        all_entries[entry_count] = {"id": entry_count, "entry_option" : entry_option, "to-do": todo}
-        new_entry_option = all_entries[entry_count]
+        all_entries[entry_count] = {"id": entry_count, "to-do": todo}
+        new_entry = all_entries[entry_count]
         entry_count += 1
-        return new_entry_option
+        return new_entry
 
     @staticmethod
-    def update_entries(entry_id, entry_option, todo, **kwargs):
-        """Updates entry option information in entries"""
-        if entry_id in all_entries.keys():
-            all_entries[entry_id] = {"id": entry_id, "entry_option" : entry_option, "to-do" : to-do}
-            return all_entries[entry_id]
-        return {"message" : "entry option does not exist"}
+    def update_entry(email, date, todo, **kwargs):
+        """Updates entries' dates information"""
+        if email in all_entries.keys():
+            all_entries[email] = {"user_idl": user_id, "date" : date, "to-do" : todo}
+            return all_entries[user_id]
+        return {"message" : "id with that entry does not exist"}
 
     @staticmethod
-    def delete_entry(entry_id):
-        """Deletes an entry_option from the entries"""
+    def delete_entry(user_id):
+        """Deletes an entry"""
         try:
-            del all_entries[entry_id]
-            return {"message" : "entry option successfully deleted"}
+            del all_entries[user_id]
+            return {"message" : "entry with that id is successfully deleted"}
         except KeyError:
-            return {"message" : "entry option does not exist"}
+            return {"message" : "entry with that id does not exist"}
+
+
+
 
 

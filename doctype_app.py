@@ -129,79 +129,15 @@ def delete_user():
 
 
 # Diaries
-@app.route('/api/v1/diaries', methods=["POST"])
-def create_diary():
-    """ endpoint for creating a diary.
-    ---
-    parameters:
-      - name: diary_no
-        required: true
-        in: formData
-        type: integer
-      - name: to-do
-        in: formData
-        type: string
-        required: true
-    """
-
-@app.route("/api/v1/diaries", methods=["GET"])
-def get_all_diaries():
-    """endpoint for getting all diaries.
-    No parameters required
-    """
-
-@app.route("/api/v1/diaries/<int:diary_id>", methods=["GET"])
-def get_one_diary():
-    """endpoint for  getting a particular diary.
-    ---
-    parameters:
-      - name: diary_id
-        in: path
-        type: integer
-        required: true
-    """
-
-@app.route('/api/v1/diaries/<int:diary_id>', methods=["PUT"])
-def modify_diary():
-    """ endpoint for modifying an existing diary.
-    ---
-    parameters:
-      - name: diary_no
-        required: true
-        in: formData
-        type: integer
-      - name: to-do
-        in: formData
-        type: string
-        required: true
-      - name: diary_id
-        in: path
-        type: integer
-        required: true
-    """
-
-@app.route('/api/v1/diaries/<int:diary_id>', methods=["DELETE"])
-def delete_diary():
-    """ endpoint for deleting an existing diary.
-    ---
-    parameters:
-      - name: diary_id
-        in: path
-        type: integer
-        required: true
-    """
-
-
-# Entries
 @app.route('/api/v1/entries', methods=["POST"])
-def create_entries():
-    """ endpoint for creating an entry option.
+def create_entry():
+    """ endpoint for creating an entry.
     ---
     parameters:
-      - name: entry_option
+      - name: user_id
         required: true
         in: formData
-        type: string
+        type: integer
       - name: to-do
         in: formData
         type: string
@@ -210,51 +146,51 @@ def create_entries():
 
 @app.route("/api/v1/entries", methods=["GET"])
 def get_all_entries():
-    """endpoint for  getting all entries options.
+    """endpoint for getting all entries.
     No parameters required
     """
 
-@app.route("/api/v1/entries/<int:entry_id>", methods=["GET"])
-def get_one_entry_option():
-    """endpoint for getting a particular entry option.
+@app.route("/api/v1/entries/<int:user_id>", methods=["GET"])
+def get_one_entry():
+    """endpoint for  getting a particular entry.
     ---
     parameters:
-      - name: entry_id
+      - name: user_id
         in: path
         type: integer
         required: true
     """
 
-@app.route('/api/v1/entries/<int:entry_id>', methods=["PUT"])
-def modify_entries():
-    """ endpoint for modify an existing entry option.
+@app.route('/api/v1/entries/<int:user_id>', methods=["PUT"])
+def modify_entry():
+    """ endpoint for modifying an existing entry.
     ---
     parameters:
-      - name: entry_option
+      - name: user_id
         required: true
         in: formData
-        type: string
+        type: integer
       - name: to-do
         in: formData
         type: string
         required: true
-      - name: entry_id
+      - name: user_id
         in: path
         type: integer
         required: true
     """
 
-@app.route('/api/v1/diaries/<int:entry_id>', methods=["DELETE"])
+@app.route('/api/v1/entries/<int:entry_id>', methods=["DELETE"])
 def delete_entry():
-    """ endpoint for deleting an existing entry option.
+    """ endpoint for deleting an existing diary.
     ---
     parameters:
-      - name: entry_id
+      - name: user_id
         in: path
         type: integer
         required: true
-    """
-
+  
+  
 
 
 

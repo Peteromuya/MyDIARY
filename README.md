@@ -17,8 +17,8 @@ These instructions will get you a copy of the project up and running on your loc
 1. Clone the repository
 
 ```
-$ git clone https://github.com/Peteromuya/My_Diary
-$ cd into the created folder
+$ git clone https://github.com/Peteromuya/MyDIARY/tree/API-V1
+$ cd into MyDiary-Final
 ```
   
 2. Initialize and activate a virtualenv
@@ -57,16 +57,13 @@ GET    /api/v1/users | Get all users
 GET   /api/v1/users/id | Get a single user
 PUT  /api/v1/users/id | Update a single user
 DELETE   /api/v1/users/id | Delete a single user
-POST   /api/v1/diaries | Create new diary
-GET   /api/v1/diaries | Get all diaries
-GET   /api/v1/diaries/id | Get a single diary
-PUT   /api/v1/diaries/id | Update a single diary
-DELETE   /api/v1/diaries/id | Delete a single diary
-POST   /api/v1/entries | Create new entry 
+POST   /api/v1/entries | Create new entry
 GET   /api/v1/entries | Get all entries
 GET   /api/v1/entries/id | Get a single entry
 PUT   /api/v1/entries/id | Update a single entry
 DELETE   /api/v1/entries/id | Delete a single entry
+
+
 
 ## Running the tests
 
